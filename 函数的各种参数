@@ -1,0 +1,61 @@
+函数的参数分为：位置参数、默认参数、可变参数、关键字参数、关键字命令参数
+
+位置参数是最基本的参数 定义方法以及调用方法如下
+def function(a):
+    print(a)
+
+默认参数可以在没有定义该参数的情况下附一个初始值 定义方法以及调用方法如下
+def function(c=0):
+    print(c)
+function(c)
+>>>0
+默认参数的无序性：
+def function(a,b=0,c=0):
+    print('A:',a,'B:',b,'C:',c)
+    
+>>>function(1,c=3,b=0)
+>>>A: 1 B: 0 C: 3
+
+对可变参数的理解：实际上是将一个list或tuple类型的数据作为参数 定义方法以及调用方法如下
+def calc(*numbers):
+    sum = 0
+    for n in numbers:
+        sum = sum + n * n
+    return sum
+    
+>>>calc(1, 2)
+>>>5
+如果现在已经有一个现成的list 或 tuple 类型数据，代入方法为：
+
+>>> nums = [1, 2, 3]
+>>> calc(nums[0], nums[1], nums[2])
+或
+>>> nums = [1, 2, 3]
+>>> calc(*nums)
+
+对关键字参数的理解：实际上是将被划为关键字参数的各个参数名以及其value值组合成一个dict
+def person(name, age, **kw):
+    print('name:', name, 'age:', age, 'other:', kw)
+    
+>>> person('Adam', 45, gender='M', job='Engineer')
+name: Adam age: 45 other: {'gender': 'M', 'job': 'Engineer'}
+
+和可变参数类似，也可以先组装出一个dict，然后，把该dict转换为关键字参数传进去：
+
+>>> extra = {'city': 'Beijing', 'job': 'Engineer'}
+>>> person('Jack', 24, city=extra['city'], job=extra['job'])
+name: Jack age: 24 other: {'city': 'Beijing', 'job': 'Engineer'}
+
+而关键字命令参数其实就是对关键字参数加以束缚，使调用函数时只能输入特定的关键字参数，从而进一步组成字典
+def person(name, age, *, city, job):
+    print(name, age, city, job)
+    
+调用方法：
+dict1={'city':'Beijing','job':'Engineer'}
+person('Jack', 24, **dict1)
+或
+person('Jack', 24, city='Beijing', job='Engineer')
+
+>>> Jack 24 Beijing Engineer
+
+
